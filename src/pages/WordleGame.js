@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import LetterSpace from '../Wordle/components-wordle/letter-space';
 
 export default function WordleGame () {
@@ -37,6 +37,7 @@ export default function WordleGame () {
                         document.getElementById(id + 1).select();
                 //user press Enter
                 } else if (e.key === "Enter" && endPoints.includes(id) && e.target.value.match(letters)) {
+                    
                     inFetch = true;
 
                     const word = getValueOfRow(e.target.parentElement.id);
@@ -46,18 +47,20 @@ export default function WordleGame () {
                     .then((data) => {
                         const spaces = Array.from(e.target.parentElement.children);
                         if (!data.value) {
+                            e.target.style.outline = 'none';
                             spaces.forEach((space) => {
                                 space.style.animation = 'shake .5s'
                             });
-                            
                         } else {
+                            e.target.classList.add('no-outline');
                             const word = [...theWord];
-
+                            var counter = 0;
                             spaces.forEach((space, index) => {
                                 const val = space.value;
                                 setTimeout(() => {
                                     if (val === word[index]) {
-                                        space.classList.add('my-green')
+                                        space.classList.add('my-green');
+                                        ++counter;
                                     } else if (word.includes(val)) {
                                         space.classList.add('my-yellow')
                                     } else {
@@ -65,22 +68,31 @@ export default function WordleGame () {
                                     }
                                 }, index * 800) 
                             })
-                            if (id !== 15)
+
+                            setTimeout(()=> {
+                                if (counter === 4) {
+                                    //show winning modal
+                            } else if (id !== 15) {
                                 document.getElementById(parseInt(id,10) + 1).select();
+                            } else {
+                                //show losing modal
+                            }
+                            
+                        }, 3200) ;
+
                         }
                         setTimeout(() => {
                             spaces.forEach((space) => {
                                 space.style = null;
                             })
-                        },501);
+                        },500);
                         
                     })
                     .catch((err) => { 
                         console.log(err);
                     })
 
-                    inFetch = false;
-                    
+                    inFetch = false;   
                 }
             }
         }); 
