@@ -1,0 +1,15 @@
+.wordle-title {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+}
+
+.wordle-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.wordle-board {
+    margin: auto;
+    display: inline-block;
+}

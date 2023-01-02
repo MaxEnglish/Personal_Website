@@ -1,5 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import LetterSpace from '../Wordle/components-wordle/letter-space';
+import Keyboard from '../Wordle/components-wordle/keyboard';
+import '../Wordle/css-wordle/wordle-main.css';
 
 export default function WordleGame () {
 
@@ -7,7 +9,12 @@ export default function WordleGame () {
     const endPoints = [3,7,11,15];
     const startPoints = [0,4,8,12];
     var inFetch = false;
-    var theWord = 'FREE';
+
+    const words = ['ABLE', 'ACID', 'AGED', 'ALSO', 'AREA', 'ARMY', 'AWAY', 'BABY'];
+
+    const getWord = () => {return words[Math.floor(Math.random() * (words.length - 1))]}
+
+    const [word, setWord] = useState(()=>getWord());
 
     const getValueOfRow = (rowNum) => {
         let finalString = '';
@@ -18,6 +25,7 @@ export default function WordleGame () {
     }
 
     useEffect(()=> {
+
         document.addEventListener('keydown', async (e)=> {
             e.preventDefault();
             const id = parseInt(e.target.id,10);
@@ -40,9 +48,9 @@ export default function WordleGame () {
                     
                     inFetch = true;
 
-                    const word = getValueOfRow(e.target.parentElement.id);
+                    const wordToTest = getValueOfRow(e.target.parentElement.id);
 
-                    await fetch('https://api.wordnik.com/v4/word.json/' + word + '/scrabbleScore?api_key=ewnok8gtygsnov62psuoiwe6qckl8qfpzxa4wue8nhk14468l')
+                    await fetch('https://api.wordnik.com/v4/word.json/' + wordToTest + '/scrabbleScore?api_key=ewnok8gtygsnov62psuoiwe6qckl8qfpzxa4wue8nhk14468l')
                     .then((response) => response.json())
                     .then((data) => {
                         const spaces = Array.from(e.target.parentElement.children);
@@ -53,15 +61,15 @@ export default function WordleGame () {
                             });
                         } else {
                             e.target.classList.add('no-outline');
-                            const word = [...theWord];
+                            const wordToArr = [...word];
                             var counter = 0;
                             spaces.forEach((space, index) => {
                                 const val = space.value;
                                 setTimeout(() => {
-                                    if (val === word[index]) {
+                                    if (val === wordToArr[index]) {
                                         space.classList.add('my-green');
                                         ++counter;
-                                    } else if (word.includes(val)) {
+                                    } else if (wordToArr.includes(val)) {
                                         space.classList.add('my-yellow')
                                     } else {
                                         space.classList.add('my-gray')
@@ -69,22 +77,20 @@ export default function WordleGame () {
                                 }, index * 800) 
                             })
 
+                            //check if correct word and go to next line
                             setTimeout(()=> {
                                 if (counter === 4) {
                                     //show winning modal
-                            } else if (id !== 15) {
-                                document.getElementById(parseInt(id,10) + 1).select();
-                            } else {
-                                //show losing modal
-                            }
-                            
-                        }, 3200) ;
-
+                                } else if (id !== 15) {
+                                    document.getElementById(parseInt(id,10) + 1).select();
+                                } else {
+                                    //show losing modal
+                                } 
+                            }, 3200) ;
                         }
+                        //reseting the animations
                         setTimeout(() => {
-                            spaces.forEach((space) => {
-                                space.style = null;
-                            })
+                            spaces.forEach((space) => {space.style = null})
                         },500);
                         
                     })
@@ -100,19 +106,22 @@ export default function WordleGame () {
         document.getElementById(0).select();
 
         document.addEventListener('mousedown', (e) => e.preventDefault())
-    },[])
+    },[word])
 
     return (
-        <>
-            <header>FREE</header>
-            {[...Array(4)].map((row, rowNum) => (
-                <div className='wordle-row' key={'row-' + rowNum} id={'row-' + rowNum}>
-                {[...Array(4)].map((space, i) => (
-                    <LetterSpace key = {i} index = {rowNum * 4 + i}/>
+        <div className='wordle-container'>
+            <header className='wordle-title'>4 Letter Wordle!</header>
+            <div className='wordle-board'>
+                {[...Array(4)].map((row, rowNum) => (
+                    <div className='wordle-row' key={'row-' + rowNum} id={'row-' + rowNum}>
+                    {[...Array(4)].map((space, i) => (
+                        <LetterSpace key = {i} index = {rowNum * 4 + i}/>
+                    ))}
+                    </div> 
                 ))}
-                </div> 
-            ))}
-        </>
+            </div>
+            <Keyboard/>
+        </div>
     )
 }
 

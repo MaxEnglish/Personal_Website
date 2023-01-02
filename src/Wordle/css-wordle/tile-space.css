@@ -1,11 +1,11 @@
 .letter-space {
     caret-color: transparent;
     border: 3px solid #e4e6e9;
-    width: 80px;
-    height: 80px;
-    margin-right: 10px;
+    width: 5rem;
+    height: 5rem;
+    margin-right: .5rem;
     text-align: center;
-    font-size: 40px;
+    font-size: 2.5rem;
     font-weight: 600;
     user-select: none;
     text-decoration: none;
@@ -15,7 +15,7 @@
 .wordle-row {
     display: flex;
     flex-direction: row;
-    margin-bottom: 15px;
+    margin-bottom: .7rem;
 }
 
 .letter-space::selection {
