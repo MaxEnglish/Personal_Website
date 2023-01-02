@@ -1,0 +1,68 @@
+.tile-default {
+    width: 1.97vw;
+    height: 1.97vw;
+    border: .07vw transparent;
+    outline: none;
+    border-radius: .26vw;
+    margin: .1vw;
+    text-align: center;
+    font-weight: 700;
+    color: #e4f2f7;
+    line-height: 1.84vw;
+    user-select: none;
+    -moz-user-select: none;
+    font-size: .92vw;
+}
+
+.red {
+    background-color: red;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.lightgray {
+    background-color: #BEBEBE;
+}
+
+.lightblue {
+    background-color: lightblue;
+}
+
+.darkblue {
+    background-color: darkblue;
+}
+
+.board-background {
+    background-color: #e4f2f7;
+    padding: 1.65vw;
+    display: inline-block;
+    border-radius: .66vw;
+    margin-left: 18vw;
+    margin-top: 2vw;
+}
+
+@media all and (max-width: 1000px) {
+    .tile-default {
+        width: 3vw;
+        height: 3vw;
+        border: .07vw transparent;
+        border-radius: .3vw;
+        margin: .17vw;
+        line-height: 2.85vw;
+        font-size: 1.3vw;
+    }
+}
+
+@media all and (max-width: 515px) {
+    .tile-default {
+        width: 5.7vw;
+        height: 5.7vw;
+        border: .07vw transparent;
+        border-radius: .57vw;
+        margin: .32vw;
+        line-height: 5.42vw;
+        font-size: 2.47vw;
+    }
+}

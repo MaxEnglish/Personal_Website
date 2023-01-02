@@ -1,0 +1,86 @@
+.bt-container {
+    z-index: 1000;
+    position: absolute;
+    width: 500px;
+    height: 260px;
+    left: 29.6%;
+    top: 24.5%;
+    flex-direction: column;
+    padding: 10px;
+    background-color: white;
+    border-radius: 15px;
+    display: none;
+}
+
+.bt-title {
+    display: flex;
+    justify-content: center;
+    background-color: azure;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.bt-body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    user-select: none;
+    -moz-user-select: none;
+}
+
+.bt-letter {
+    text-align: center;
+    width: 35px;
+    height: 35px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #ffd99c;
+    padding: 5px;
+    margin: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.bt-highlighted {
+    -webkit-box-shadow: 0 0 10px red;
+    box-shadow: 0 0 10px red;
+}
+
+.bt-footer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    bottom: -15px;
+}
+
+.bt-btn {
+    display: flex;
+    justify-content: center;
+    padding: 4px 15px;
+    width: 90px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.bt-cancel-btn {
+    background-color: #BBB;
+}
+
+.bt-confirm-btn {
+    background-color: lightblue;
+    display: none;
+}
+
+
+@media all and (max-width: 1000px) {
+    .bt-container {
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        
+    }
+}

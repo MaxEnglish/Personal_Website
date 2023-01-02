@@ -1,0 +1,52 @@
+.iw-container {
+    z-index: 1000;
+    position: absolute;
+    width: 300px;
+    height: 150px;
+    left: 36.1%;
+    top: 32%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.iw-title {
+    display: flex;
+    justify-content: center;
+    background-color: azure;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.iw-text {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+}
+
+.okay-btn {
+    display: flex;
+    justify-content: center;
+    padding: 4px 15px;
+    background-color: lightblue;
+    position: relative;
+    bottom: -15px;
+    width: 70px;
+    border-radius: 5px;
+    margin-left: 108px;
+}
+
+@media all and (max-width: 1000px) {
+    .iw-container {
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        
+    }
+}

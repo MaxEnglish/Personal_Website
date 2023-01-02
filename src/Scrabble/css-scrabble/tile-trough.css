@@ -1,0 +1,124 @@
+.trough-backing {
+    width: 42.6vw;
+    height: 6.58vw;
+    padding: 0 .33vw;
+    background-color: tan;
+    margin: 0 .33vw;
+    border-radius: .33vw;
+    justify-content: center;
+    background-image: url('../../../public/trough.jpg');
+    background-repeat: no-repeat;
+}
+
+.trough-letter {
+    width: 5.27vw;
+    height: 5.27vw;
+    background-color: #ffd99c;
+    border-radius: .53vw;
+    text-align: center;
+    font-weight: bold;
+    font-size: 3.29vw;
+    color: #352307;
+    z-index: 1;
+    cursor: grab;
+    background-image: url('../../../public/blank-tile.jpg');
+    box-shadow: 1px 1px 1px 1px;
+    user-select: none;
+    -moz-user-select: none;
+}
+
+.trough-drop {
+    width: 5.27vw;
+    height: 5.27vw;
+    margin: 0 .2vw;
+    /*border: 1px dotted black;*/
+    padding: 0;
+    margin-bottom: 1.18vw;
+}
+
+.hidden {
+    display: none;
+}
+
+.trough-letter-shrunk {
+    width: 1.97vw;
+    height: 1.97vw;
+    border-radius: .26vw;
+    font-size: 1.32vw;
+    z-index: 3;
+    box-shadow: none;
+}
+
+.trough-score {
+    font-size: 30%;
+    margin-top: -25%;
+    margin-left: 70%;
+}
+
+.score-shrunk {
+    margin-top: -60%;
+}
+
+@media all and (max-width: 1000px) {
+    .trough-backing {
+        width: 64.87vw;
+        height: 10vw;
+        padding: 0 .33vw;
+        margin: 0 .33vw;
+        border-radius: .33vw;
+    }
+
+    .trough-letter {
+        width: 8.01vw;
+        height: 8.01vw;
+        border-radius: .81vw;
+        font-size: 5vw;
+    }
+
+    .trough-drop {
+        width: 8.01vw;
+        height: 8.01vw;
+        margin: 0 .2vw;
+        padding: 0;
+        margin-bottom: 1.8vw;
+    }
+
+    .trough-letter-shrunk {
+        width: 2.99vw;
+        height: 2.99vw;
+        border-radius: .36vw;
+        font-size: 1.81vw;
+    }
+}
+
+@media all and (max-width: 515px) {
+    .trough-backing {
+        width: 75vw;
+        height: 11.56vw;
+        padding: 0 .33vw;
+        margin: 0 .1vw;
+        border-radius: .33vw;
+    }
+
+    .trough-letter {
+        width: 9.29vw;
+        height: 9.29vw;
+        border-radius: .94vw;
+        font-size: 5.8vw;
+    }
+
+    .trough-drop {
+        width: 9.29vw;
+        height: 9.29vw;
+        margin: 0 .3vw;
+        padding: 0;
+        margin-bottom: 2.09vw;
+    }
+
+    .trough-letter-shrunk {
+        width: 5.7vw;
+        height: 5.7vw;
+        border-radius: .68vw;
+        font-size: 3.44vw;
+    }
+}

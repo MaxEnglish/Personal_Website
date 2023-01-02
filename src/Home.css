@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+.section-break {
+  margin-bottom: 50px;
+}
+
+.nlx-link:hover {
+  cursor: pointer;
+  color: blue;
+}
+
+.agora-logo {
+  width: auto;
+  max-width: 60%;
+  margin: 30px;
+}
+
