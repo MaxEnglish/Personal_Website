@@ -1,0 +1,82 @@
+.button-backing {
+    width: 6.58vw;
+    height: 6.58vw;
+    background-color: #e4f2f7;
+    border: .2vw solid darkgray;
+    border-radius: .53vw;
+    display: flex;
+    flex-direction: column;
+    margin: 0 .33vw;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    z-index: 999;
+}
+
+.button-icon {
+    margin: auto;
+    margin-top: 1vw;
+    font-size: 2.63vw;
+}
+
+.button-title {
+    font-size: 1.32vw;
+    margin-bottom: .5vw;
+}
+
+.buttons {
+    position: absolute;
+    top: 39.63vw;
+}
+
+.side-buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+@media all and (max-width: 1000px) {
+    .button-backing {
+        width: 10vw;
+        height: 10vw;
+        margin: .33vw .33vw;
+    }
+
+    .button-icon {
+        font-size: 4vw;
+    }
+    
+    .button-title {
+        font-size: 2.01vw;
+    }
+
+    .side-buttons {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        bottom: 10.8vw;
+    }
+}
+
+@media all and (max-width: 515px) {
+    .button-backing {
+        width: 9vw;
+        height: 9vw;
+        margin: .33vw 1.6vw;
+    }
+
+    .button-icon {
+        font-size: 3vw;
+    }
+    
+    .button-title {
+        font-size: 1.9vw;
+    }
+
+    .side-buttons {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        bottom: 9vw;
+    }
+}
