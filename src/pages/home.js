@@ -55,7 +55,7 @@ export default function Home() {
             <p className='font-semibold'>Wordle</p>
         </div>
         </Link>
-        <Link>
+        <Link to='/crossword'>
         <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48'>
             <img src='CROSSWORD.png' className='container mx-auto w-32'/>
             <p className='font-semibold'>Crossword Puzzle</p>

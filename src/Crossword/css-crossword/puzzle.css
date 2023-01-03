@@ -1,0 +1,38 @@
+.puzzle-backing {
+    display: inline-block;
+    margin-top: 5rem;
+    margin-left: 28rem;
+    border: 3px solid black;
+    padding: 0;
+}
+
+.puzzle-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.puzzle-square {
+    text-align: center;
+    border: 1px solid black;
+    width: 2.25rem;
+    height: 2.25rem;
+}
+
+.black-square {
+    background-color: black;
+}
+
+.square-number {
+    font-size: .7rem;
+    position: relative;
+    top: -.1rem;
+    left: .1rem;
+    float: left;
+    cursor: default;
+    user-select: none;
+    -moz-user-select: none;
+}
+
+.highlighted {
+    background-color: aliceblue;
+}
