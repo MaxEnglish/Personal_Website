@@ -12,8 +12,8 @@ export default function WordleGame () {
     var inFetch = false;
     var gameEnded = false;
 
-    const words = ['ABLE', 'ACID', 'BABY', 'BILL', 'CALF', 'CLIP', 'EAST', 'FROM', 'FLIP', 
-                   'GOAT', 'GRIP', 'HILL', 'HEMP', 'INTO', 'JOKE', 'KILL', 'LORD', 'MINE', 
+    const words = ['ABLE', 'ACID', 'BABY', 'BAIT', 'CALF', 'CLIP', 'EAST', 'FROM', 'FLIP', 
+                   'GOAT', 'GRIP', 'HILL', 'HEMP', 'INTO', 'JOKE', 'KILN', 'LORD', 'MINE', 
                    'MIST', 'OPEN', 'OGRE', 'PILL', 'POND', 'QUIT', 'REST', 'RIFT', 'SOFT', 
                    'SING', 'TORN', 'TILT', 'UNDO' ,'VEST', 'WILT', 'YOUR', 'ZEST'];
 
@@ -85,7 +85,7 @@ export default function WordleGame () {
                                     } else {
                                         space.classList.add('my-gray')
                                     }
-                                }, index * 800) 
+                                }, index * 500) 
                             })
 
                             //check if correct word and go to next line
@@ -106,7 +106,7 @@ export default function WordleGame () {
                                     gameEnded = true;
                                 }
                                 inFetch = false;   
-                            }, 3200) ;
+                            }, 2200) ;
                         }
                         //reseting the animations
                         setTimeout(() => {
