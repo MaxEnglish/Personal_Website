@@ -3,9 +3,10 @@ import '../css-crossword/puzzle.css';
 import {puzzleLoad} from '../js/crossword.js';
 
 export default function Puzzle () {
-const x = "1,1"
-    //true = horizontal, false = vertical
-    const [orientation, setOrientation] = useState(true);
+
+    const letters = /^[A-Za-z]{1}$/;
+
+    const [orientation, setOrientation] = useState(true); //true = horizontal, false = vertical
 
     const [currentSquare, setCurrentSquare] = useState([null, null]);
 
@@ -16,11 +17,13 @@ const x = "1,1"
             dynamicOrientation = !dynamicOrientation;
         }
         setCurrentSquare(coords);
+
         //remove all the previously highlighted squares
         document.querySelectorAll('.highlighted').forEach((square) => square.classList.remove('highlighted'));
     
-        //highlighting the pivot square
-        document.querySelector(`[data-coords="${coords}"]`).classList.add('highlighted');
+        //highlight the pivot square and give border
+        const selectedSquare = document.querySelector(`[data-coords="${coords}"]`);
+        selectedSquare.classList.add('highlighted');
 
         //find which squares need to be highlighted
         if (dynamicOrientation) {
@@ -100,11 +103,32 @@ const x = "1,1"
         }
     }
 
+    useEffect(() => {
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "backspace") {
+
+            } else if (e.key === "backspace") {
+
+            } else if (e.key.match(letters)) {
+                const space = document.querySelector(`[data-coords="${currentSquare}"]`);
+                if (space) {
+                    space.textContent = e.key;
+                }
+                console.log(space.getAttribute('data-coords'))
+                const coords = space.getAttribute('data-coords');
+                const commaIndex = coords.indexOf(',');
+                if (orientation) {
+                    setCurrentSquare([parseInt(coords.substring(0,commaIndex),10),parseInt(coords.substring(commaIndex, -1),10) + 1])
+                } else {
+                    setCurrentSquare([parseInt(coords.substring(0,commaIndex),10) + 1,parseInt(coords.substring(commaIndex, -1),10)])
+                }
+
+            }
+        })
+    },[currentSquare])
+
     return (
         <>
-        <button onClick={()=> {
-            console.log(currentSquare)
-        }}>press</button>
             <div className='puzzle-backing'>
                 {puzzleLoad.map((row, rowIndex) => (
                     <div className='puzzle-row' id={"row-" + rowIndex} key={"row-" + rowIndex}>

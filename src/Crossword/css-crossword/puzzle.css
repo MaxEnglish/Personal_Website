@@ -36,3 +36,7 @@
 .highlighted {
     background-color: aliceblue;
 }
+
+.selected {
+    border: 3px solid black;
+}
