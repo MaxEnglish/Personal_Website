@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import LetterSpace from '../Wordle/components-wordle/letter-space';
 import Keyboard from '../Wordle/components-wordle/keyboard';
+import WinLoseModal from '../Wordle/components-wordle/win-lose-modal';
 import '../Wordle/css-wordle/wordle-main.css';
 
 export default function WordleGame () {
@@ -12,9 +13,11 @@ export default function WordleGame () {
 
     const words = ['ABLE', 'ACID', 'AGED', 'ALSO', 'AREA', 'ARMY', 'AWAY', 'BABY'];
 
-    const getWord = () => {return words[Math.floor(Math.random() * (words.length - 1))]}
+    const getRandomWord = () => {return words[Math.floor(Math.random() * (words.length - 1))]}
 
-    const [word, setWord] = useState(()=>getWord());
+    const [word, setWord] = useState(()=>getRandomWord());
+    const [modal, setModal] = useState({state: false, title: '', text: ''});
+
 
     const getValueOfRow = (rowNum) => {
         let finalString = '';
@@ -27,10 +30,11 @@ export default function WordleGame () {
     useEffect(()=> {
 
         document.addEventListener('keydown', async (e)=> {
+            console.log(e)
             e.preventDefault();
             const id = parseInt(e.target.id,10);
 
-            if (!inFetch) {
+            if (!inFetch && !modal.state) {
                 //user press backspace
                 if (e.key === 'Backspace') {
                     if (e.target.value)
@@ -59,6 +63,7 @@ export default function WordleGame () {
                             spaces.forEach((space) => {
                                 space.style.animation = 'shake .5s'
                             });
+                            inFetch = false;
                         } else {
                             e.target.classList.add('no-outline');
                             const wordToArr = [...word];
@@ -80,12 +85,13 @@ export default function WordleGame () {
                             //check if correct word and go to next line
                             setTimeout(()=> {
                                 if (counter === 4) {
-                                    //show winning modal
+                                    setModal({state: true, title: "You Win!", text: `Congratulations. You have solve the puzzle in ${parseInt(e.target.parentElement.id.slice(-1),10) + 1} attempts!`})
                                 } else if (id !== 15) {
                                     document.getElementById(parseInt(id,10) + 1).select();
                                 } else {
-                                    //show losing modal
-                                } 
+                                    setModal({state: true, title: "You Lose", text: `The correct answer to the puzzle was ${word}. Better luck next time.`})
+                                }
+                                inFetch = false;   
                             }, 3200) ;
                         }
                         //reseting the animations
@@ -96,9 +102,8 @@ export default function WordleGame () {
                     })
                     .catch((err) => { 
                         console.log(err);
-                    })
-
-                    inFetch = false;   
+                        inFetch = false;  
+                    }) 
                 }
             }
         }); 
@@ -110,6 +115,9 @@ export default function WordleGame () {
 
     return (
         <div className='wordle-container'>
+            {modal.state && (
+                <WinLoseModal title={modal.title} text={modal.text}/>
+            )}
             <header className='wordle-title'>4 Letter Wordle!</header>
             <div className='wordle-board'>
                 {[...Array(4)].map((row, rowNum) => (
