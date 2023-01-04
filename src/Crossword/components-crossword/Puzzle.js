@@ -11,6 +11,11 @@ export default function Puzzle () {
     const [currentSquare, setCurrentSquare] = useState([null, null]);
 
     const handleClick = (coords, dynamicOrientation) => {
+        document.removeEventListener('keydown', onKeyDown);
+        const selected = document.querySelector('.selected');
+        if (selected)
+            selected.classList.remove('selected');
+
         //change the orientation if we've click a square twice
         if (currentSquare[0] === coords[0] && currentSquare[1] === coords[1]) {
             setOrientation(!dynamicOrientation);
@@ -24,6 +29,7 @@ export default function Puzzle () {
         //highlight the pivot square and give border
         const selectedSquare = document.querySelector(`[data-coords="${coords}"]`);
         selectedSquare.classList.add('highlighted');
+        selectedSquare.classList.add('selected');
 
         //find which squares need to be highlighted
         if (dynamicOrientation) {
@@ -103,28 +109,67 @@ export default function Puzzle () {
         }
     }
 
-    useEffect(() => {
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "backspace") {
+    const onKeyDown = (e) => {
+        e.preventDefault();
+        const space = document.querySelector(`[data-coords="${currentSquare}"]`);
 
-            } else if (e.key === "backspace") {
+        let nextSpaceCoords;
+        orientation ?
+        nextSpaceCoords = [currentSquare[0], currentSquare[1] + 1] :
+        nextSpaceCoords = [currentSquare[0] + 1, currentSquare[1]];
+        
+        const selectedSquare = document.querySelector('.selected');
+        const nextSpace = document.querySelector(`[data-coords="${nextSpaceCoords}"]`);
 
-            } else if (e.key.match(letters)) {
-                const space = document.querySelector(`[data-coords="${currentSquare}"]`);
-                if (space) {
-                    space.textContent = e.key;
-                }
-                console.log(space.getAttribute('data-coords'))
-                const coords = space.getAttribute('data-coords');
-                const commaIndex = coords.indexOf(',');
-                if (orientation) {
-                    setCurrentSquare([parseInt(coords.substring(0,commaIndex),10),parseInt(coords.substring(commaIndex, -1),10) + 1])
+        if (selectedSquare && e.key !== "Backspace" && nextSpace && nextSpace.id !== "black-square")
+            selectedSquare.classList.remove('selected');
+
+        if (e.key === "Backspace") {
+            if (space) {
+                if (space.childNodes[1]) {
+                    space.removeChild(space.childNodes[1])
                 } else {
-                    setCurrentSquare([parseInt(coords.substring(0,commaIndex),10) + 1,parseInt(coords.substring(commaIndex, -1),10)])
+                    setCurrentSquare(nextSpaceCoords);
+                    nextSpace.classList.add('selected')
+                    document.removeEventListener('keydown', onKeyDown);
+                }
+                
+            }
+        } else if (e.key === "tab") {
+
+        } else if (e.key.match(letters)) {
+            if (space) {
+                
+                //fill in letter
+                const firstChild = space.childNodes[0];
+                if (firstChild) {
+                    const check = space.childNodes[0].tagName === 'SPAN';
+                
+                    if ((check && space.childNodes[1])) {
+                        space.removeChild(space.childNodes[1])
+                    } else if ((!check && space.childNodes[0])) {
+                        space.removeChild(space.childNodes[0])
+                    }
                 }
 
+                const textContainer = document.createElement('p');
+                textContainer.classList.add('center-text')
+                textContainer.appendChild(document.createTextNode(e.key.toUpperCase()))
+                space.appendChild(textContainer);
+
+                //handle setting the next square
+
+                if (nextSpace && nextSpace.id !== "black-square") {
+                    nextSpace.classList.add('selected');
+                    setCurrentSquare(nextSpaceCoords);
+                    document.removeEventListener('keydown', onKeyDown);
+                }
             }
-        })
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('keydown', onKeyDown);
     },[currentSquare])
 
     return (

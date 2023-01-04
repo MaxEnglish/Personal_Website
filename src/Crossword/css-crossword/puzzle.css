@@ -2,7 +2,7 @@
     display: inline-block;
     margin-top: 5rem;
     margin-left: 28rem;
-    border: 3px solid black;
+    outline: 1px solid black;
     padding: 0;
 }
 
@@ -16,6 +16,12 @@
     border: 1px solid black;
     width: 2.25rem;
     height: 2.25rem;
+    padding: .3rem .2rem 0 0;
+    font-weight: 700;
+    font-size: larger;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
 }
 
 .black-square {
@@ -23,14 +29,11 @@
 }
 
 .square-number {
-    font-size: .7rem;
-    position: relative;
-    top: -.1rem;
-    left: .1rem;
-    float: left;
-    cursor: default;
-    user-select: none;
-    -moz-user-select: none;
+    font-weight: 500;
+    font-size: .5rem;
+    position: absolute;
+    margin-top: -.37rem;
+    margin-left: -.9rem;
 }
 
 .highlighted {
@@ -38,5 +41,6 @@
 }
 
 .selected {
-    border: 3px solid black;
+    box-shadow: inset 0 0 0 .05rem black;
+
 }
