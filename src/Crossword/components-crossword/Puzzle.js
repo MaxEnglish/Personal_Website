@@ -126,7 +126,6 @@ export default function Puzzle () {
 
         if (e.key === "Backspace") {
             if (space) {
-
                 let previousSpaceCoords;
                 orientation ?
                 previousSpaceCoords = [currentSquare[0], currentSquare[1] - 1] :
@@ -135,20 +134,54 @@ export default function Puzzle () {
                 const previousSpace = document.querySelector(`[data-coords="${previousSpaceCoords}"]`);
 
                 if (space.childNodes[1] || (space.childNodes[0] && space.childNodes[0].tagName !== 'SPAN')) {
-
                     space.childNodes[1] ?
                     space.removeChild(space.childNodes[1]) :
                     space.removeChild(space.childNodes[0]);
-
                 } else if (previousSpace) {
                     space.classList.remove('selected');
                     setCurrentSquare(previousSpaceCoords);
                     previousSpace.classList.add('selected')
                     document.removeEventListener('keydown', onKeyDown);
                 }
-                
             }
-        } else if (e.key === "tab") {
+        } else if (e.key === "Tab") {
+            //find the next number
+            if (space) {
+                let done = false;
+
+                if (orientation) {
+
+                    let next = nextSpaceCoords;
+                    while (!done) {
+                        const nextBox = document.querySelector(`[data-coords="${next}"]`);
+                        if (!nextBox) {
+                            //when we go to the next row
+                            const newCoords = [next[0] + 1, 0];
+                            const newSquare = document.querySelector(`[data-coords="${newCoords}"]`);
+                            if (newSquare.id === "black-square") {
+                                next = newCoords;
+                            } else {
+                                done = true;
+                                setCurrentSquare(newCoords);
+                                newSquare.classList.add('selected');
+                            }
+                        } else if (nextBox.id === "black-square") {
+                            done = true;
+                            const newCoords = [next[0], next[1] + 1];
+                            setCurrentSquare(newCoords);
+                            document.querySelector(`[data-coords="${newCoords}"]`).classList.add('selected');
+                        } else {
+                            next = [next[0], next[1] + 1];
+                        }
+                    }
+                } else {
+                    //handle vertical
+                    while (!done) {
+                        let currentSquare = [currentSquare[0], currentSquare[1] + 1];
+                    }
+                }
+            }
+            document.removeEventListener('keydown', onKeyDown);
 
         } else if (e.key.match(letters)) {
             if (space) {
