@@ -126,11 +126,24 @@ export default function Puzzle () {
 
         if (e.key === "Backspace") {
             if (space) {
-                if (space.childNodes[1]) {
-                    space.removeChild(space.childNodes[1])
-                } else {
-                    setCurrentSquare(nextSpaceCoords);
-                    nextSpace.classList.add('selected')
+
+                let previousSpaceCoords;
+                orientation ?
+                previousSpaceCoords = [currentSquare[0], currentSquare[1] - 1] :
+                previousSpaceCoords = [currentSquare[0] - 1, currentSquare[1]];
+
+                const previousSpace = document.querySelector(`[data-coords="${previousSpaceCoords}"]`);
+
+                if (space.childNodes[1] || (space.childNodes[0] && space.childNodes[0].tagName !== 'SPAN')) {
+
+                    space.childNodes[1] ?
+                    space.removeChild(space.childNodes[1]) :
+                    space.removeChild(space.childNodes[0]);
+
+                } else if (previousSpace) {
+                    space.classList.remove('selected');
+                    setCurrentSquare(previousSpaceCoords);
+                    previousSpace.classList.add('selected')
                     document.removeEventListener('keydown', onKeyDown);
                 }
                 
@@ -139,26 +152,21 @@ export default function Puzzle () {
 
         } else if (e.key.match(letters)) {
             if (space) {
-                
-                //fill in letter
-                const firstChild = space.childNodes[0];
-                if (firstChild) {
-                    const check = space.childNodes[0].tagName === 'SPAN';
-                
-                    if ((check && space.childNodes[1])) {
-                        space.removeChild(space.childNodes[1])
-                    } else if ((!check && space.childNodes[0])) {
-                        space.removeChild(space.childNodes[0])
-                    }
-                }
+                //handle replacing current letter if space already contains one
 
+                    if (space.childNodes[0] && space.childNodes[0].tagName !== 'SPAN') {
+                        space.removeChild(space.childNodes[0])
+                    } else if (space.childNodes[1]) {
+                        space.removeChild(space.childNodes[1])
+                    }
+                
+
+                //create a new element for the letter typed
                 const textContainer = document.createElement('p');
-                textContainer.classList.add('center-text')
                 textContainer.appendChild(document.createTextNode(e.key.toUpperCase()))
                 space.appendChild(textContainer);
 
                 //handle setting the next square
-
                 if (nextSpace && nextSpace.id !== "black-square") {
                     nextSpace.classList.add('selected');
                     setCurrentSquare(nextSpaceCoords);
