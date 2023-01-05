@@ -10,23 +10,16 @@ export default function Puzzle () {
 
     const [currentSquare, setCurrentSquare] = useState([null, null]);
 
-    const handleClick = (coords, dynamicOrientation) => {
-        document.removeEventListener('keydown', onKeyDown);
-        const selected = document.querySelector('.selected');
-        if (selected)
-            selected.classList.remove('selected');
+    ///// Auxilliary Functions /////
 
-        //change the orientation if we've click a square twice
-        if (currentSquare[0] === coords[0] && currentSquare[1] === coords[1]) {
-            setOrientation(!dynamicOrientation);
-            dynamicOrientation = !dynamicOrientation;
-        }
+    const updateHighlighting = (dynamicOrientation, coords) => {
+
+        document.removeEventListener('keydown', onKeyDown);
+
         setCurrentSquare(coords);
 
-        //remove all the previously highlighted squares
         document.querySelectorAll('.highlighted').forEach((square) => square.classList.remove('highlighted'));
-    
-        //highlight the pivot square and give border
+
         const selectedSquare = document.querySelector(`[data-coords="${coords}"]`);
         selectedSquare.classList.add('highlighted');
         selectedSquare.classList.add('selected');
@@ -79,6 +72,23 @@ export default function Puzzle () {
         }
     }
 
+    //Click event function
+    const handleClick = (coords, dynamicOrientation) => {
+        
+        const selected = document.querySelector('.selected');
+        if (selected)
+            selected.classList.remove('selected');
+
+        //change the orientation if we've click a square twice
+        if (currentSquare[0] === coords[0] && currentSquare[1] === coords[1]) {
+            setOrientation(!dynamicOrientation);
+            dynamicOrientation = !dynamicOrientation;
+        }
+        
+        updateHighlighting(dynamicOrientation, coords);
+    }
+
+    //holds key for rendering the board layout
     const renderPuzzle = (char,x,y) => {
         switch (char) {
             case -1:
@@ -150,39 +160,69 @@ export default function Puzzle () {
                 let done = false;
 
                 if (orientation) {
-
-                    let next = nextSpaceCoords;
+                    //handle horizontal
+                    let next = nextSpaceCoords;     //current iterator
+                    let nextBehind = [nextSpaceCoords[0], nextSpaceCoords[1] - 1];  //space before current iterator
                     while (!done) {
-                        const nextBox = document.querySelector(`[data-coords="${next}"]`);
+                        const nextBox = document.querySelector(`[data-coords="${next}"]`);  //element corrosponding to next
+                        const nextBoxBehind = document.querySelector(`[data-coords="${nextBehind}"]`);  //element corrosponding to nextBehind
                         if (!nextBox) {
-                            //when we go to the next row
-                            const newCoords = [next[0] + 1, 0];
-                            const newSquare = document.querySelector(`[data-coords="${newCoords}"]`);
-                            if (newSquare.id === "black-square") {
-                                next = newCoords;
+                            //handle if iterator reaches end of board
+                            if (next[1] > 13) {
+                                next = [next[0] + 1, 0];
+                                nextBehind = [nextBehind[0] + 1, -1]
                             } else {
-                                done = true;
-                                setCurrentSquare(newCoords);
-                                newSquare.classList.add('selected');
-                            }
+                                next = [0,0];
+                                nextBehind = [0,-1]
+                            }  
                         } else if (nextBox.id === "black-square") {
-                            done = true;
-                            const newCoords = [next[0], next[1] + 1];
-                            setCurrentSquare(newCoords);
-                            document.querySelector(`[data-coords="${newCoords}"]`).classList.add('selected');
-                        } else {
+                            //handle if iterator reaches a black square
                             next = [next[0], next[1] + 1];
+                            nextBehind = [nextBehind[0], nextBehind[1] + 1]
+                        } else {
+                            if (!nextBoxBehind || nextBoxBehind.id === 'black-square') {
+                                //correct spot
+                                updateHighlighting(orientation, next)
+                                done = true;
+                            } else {
+                                next = [next[0], next[1] + 1];
+                                nextBehind = [nextBehind[0], nextBehind[1] + 1];
+                            }
                         }
                     }
                 } else {
                     //handle vertical
+                    let next = [currentSquare[0], currentSquare[1] + 1];    //current iterator
+                    let nextAbove = [currentSquare[0] - 1, currentSquare[1] + 1];   //space above current iterator
                     while (!done) {
-                        let currentSquare = [currentSquare[0], currentSquare[1] + 1];
+                        const nextBox = document.querySelector(`[data-coords="${next}"]`);  //element corrosponding to next
+                        const nextBoxAbove = document.querySelector(`[data-coords="${nextAbove}"]`);    //element corrosponding  to nextAbove
+                        if (!nextBox) {
+                            //handle iterator reaching end of board
+                            if (next[0] < 13) {
+                                next = [next[0] + 1, 0];
+                                nextAbove = [nextAbove[0] + 1, 0];
+                            } else {
+                                next = [0,0];
+                                nextAbove = [-1,0]
+                            }
+                        } else if (nextBox.id === "black-square") {
+                            //handle iterator hitting black square
+                            next = [next[0], next[1] + 1];
+                            nextAbove = [nextAbove[0], nextAbove[1] + 1]
+                        } else {
+                            if (!nextBoxAbove || nextBoxAbove.id === 'black-square') {
+                                //correct spot
+                                done = true;
+                                updateHighlighting(orientation, next)
+                            } else {
+                                next = [next[0], next[1] + 1];
+                                nextAbove = [nextAbove[0], nextAbove[1] + 1];
+                            }
+                        }
                     }
                 }
             }
-            document.removeEventListener('keydown', onKeyDown);
-
         } else if (e.key.match(letters)) {
             if (space) {
                 //handle replacing current letter if space already contains one
