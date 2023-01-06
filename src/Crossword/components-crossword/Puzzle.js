@@ -105,6 +105,7 @@ export default function Puzzle () {
                         key={[x,y]}
                         className="puzzle-square" 
                         data-coords={[x,y]} 
+                        id= {'s-' + char}
                         onClick={() => handleClick([x,y], orientation)}
                         >
                         </div>;
@@ -113,6 +114,7 @@ export default function Puzzle () {
                         key={[x,y]}
                         className="puzzle-square" 
                         data-coords={[x,y]} 
+                        id= {'s-' + char}
                         onClick={() => handleClick([x,y], orientation)}
                         >
                             <span className="square-number">{char}</span>
@@ -252,6 +254,15 @@ export default function Puzzle () {
         }
     }
 
+    const goToClue = (number, orientation) => {
+        const correctSquare = document.getElementById('s-' + number);
+        const correctSquareCoords = correctSquare.dataset.coords;
+        const indexOfComma = correctSquareCoords.indexOf(',');
+        const parsedCoords = [parseInt(correctSquareCoords.substring(0,indexOfComma),10), parseInt(correctSquareCoords.substring(indexOfComma + 1, correctSquareCoords.length, 10))];
+
+        updateHighlighting(orientation, parsedCoords);
+    }
+
     useEffect(() => {
         document.addEventListener('keydown', onKeyDown);
     }, [currentSquare]);
@@ -262,14 +273,26 @@ export default function Puzzle () {
                 <div className='puzzle-clues'>
                     <header className='clues-header'>Across</header>
                     {clues[0].map((clue, acrossIndex) => (
-                        <div className='clue' key={acrossIndex}>
+                        <div 
+                        className='clue' 
+                        key={acrossIndex}
+                        onClick={()=> {
+                            goToClue(clue.number);
+                        }}
+                        >
                             <div className='clue-number'>{clue.number}</div>
                             <div className='clue-text'>{clue.clue}</div>
                         </div>
                     ))}
                     <header className='clues-header'>Down</header>
                     {clues[1].map((clue, downIndex) => (
-                        <div className='clue' key={downIndex}>
+                        <div 
+                        className='clue' 
+                        key={downIndex}
+                        onClick={()=> {
+                            goToClue(clue.number);
+                        }}
+                        >
                             <div className='clue-number'>{clue.number}</div>
                             <div className='clue-text'>{clue.clue}</div>
                         </div>
