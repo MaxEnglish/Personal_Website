@@ -119,6 +119,7 @@ export default function Puzzle () {
         }
     }
 
+    //trigger on keypress
     const onKeyDown = (e) => {
         e.preventDefault();
         const space = document.querySelector(`[data-coords="${currentSquare}"]`);
@@ -251,7 +252,7 @@ export default function Puzzle () {
 
     useEffect(() => {
         document.addEventListener('keydown', onKeyDown);
-    },[currentSquare])
+    }, [currentSquare]);
 
     return (
         <>
