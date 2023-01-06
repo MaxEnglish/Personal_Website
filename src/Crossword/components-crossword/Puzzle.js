@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react';
+import { ArrowDownCircle } from 'react-bootstrap-icons';
 import '../css-crossword/puzzle.css';
-import {puzzleLoad} from '../js/crossword.js';
+import {puzzleLoad, clues} from '../js/crossword.js';
 
 export default function Puzzle () {
 
@@ -122,6 +123,7 @@ export default function Puzzle () {
     //trigger on keypress
     const onKeyDown = (e) => {
         e.preventDefault();
+        const key = e.key;
         const space = document.querySelector(`[data-coords="${currentSquare}"]`);
 
         let nextSpaceCoords;
@@ -132,10 +134,10 @@ export default function Puzzle () {
         const selectedSquare = document.querySelector('.selected');
         const nextSpace = document.querySelector(`[data-coords="${nextSpaceCoords}"]`);
 
-        if (selectedSquare && e.key !== "Backspace" && nextSpace && nextSpace.id !== "black-square")
+        if ((selectedSquare && key !== "Backspace" && nextSpace && nextSpace.id !== "black-square" && key.match(letters)) || key === "Tab")
             selectedSquare.classList.remove('selected');
 
-        if (e.key === "Backspace") {
+        if (key === "Backspace") {
             if (space) {
                 let previousSpaceCoords;
                 orientation ?
@@ -155,7 +157,7 @@ export default function Puzzle () {
                     document.removeEventListener('keydown', onKeyDown);
                 }
             }
-        } else if (e.key === "Tab") {
+        } else if (key === "Tab") {
             //find the next number
             if (space) {
                 let done = false;
@@ -224,7 +226,7 @@ export default function Puzzle () {
                     }
                 }
             }
-        } else if (e.key.match(letters)) {
+        } else if (key.match(letters)) {
             if (space) {
                 //handle replacing current letter if space already contains one
 
@@ -237,7 +239,7 @@ export default function Puzzle () {
 
                 //create a new element for the letter typed
                 const textContainer = document.createElement('p');
-                textContainer.appendChild(document.createTextNode(e.key.toUpperCase()))
+                textContainer.appendChild(document.createTextNode(key.toUpperCase()))
                 space.appendChild(textContainer);
 
                 //handle setting the next square
@@ -255,16 +257,34 @@ export default function Puzzle () {
     }, [currentSquare]);
 
     return (
-        <>
-            <div className='puzzle-backing'>
-                {puzzleLoad.map((row, rowIndex) => (
-                    <div className='puzzle-row' id={"row-" + rowIndex} key={"row-" + rowIndex}>
-                        {row.map((square, squareIndex) => (
-                            renderPuzzle(square, rowIndex, squareIndex)
-                        ))}
-                    </div>
-                ))}
+        <div className='page-backing'>
+            <div className='crossword-backing'>
+                <div className='puzzle-clues'>
+                    <header className='clues-header'>Across</header>
+                    {clues[0].map((clue, acrossIndex) => (
+                        <div className='clue' key={acrossIndex}>
+                            <div className='clue-number'>{clue.number}</div>
+                            <div className='clue-text'>{clue.clue}</div>
+                        </div>
+                    ))}
+                    <header className='clues-header'>Down</header>
+                    {clues[1].map((clue, downIndex) => (
+                        <div className='clue' key={downIndex}>
+                            <div className='clue-number'>{clue.number}</div>
+                            <div className='clue-text'>{clue.clue}</div>
+                        </div>
+                    ))}
+                </div>
+                <div className='puzzle-backing'>
+                    {puzzleLoad.map((row, rowIndex) => (
+                        <div className='puzzle-row' id={"row-" + rowIndex} key={"row-" + rowIndex}>
+                            {row.map((square, squareIndex) => (
+                                renderPuzzle(square, rowIndex, squareIndex)
+                            ))}
+                        </div>
+                    ))}
+                </div>
             </div>
-        </>
+        </div>
     )
 }

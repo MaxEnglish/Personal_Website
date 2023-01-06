@@ -1,9 +1,9 @@
 .puzzle-backing {
     display: inline-block;
-    margin-top: 5rem;
-    margin-left: 28rem;
+    margin-left: 5rem;
     outline: 1px solid black;
     padding: 0;
+    background-color: white;
 }
 
 .puzzle-row {
@@ -43,3 +43,47 @@
 .selected {
     box-shadow: inset 0 0 0 .05rem black;
 }
+
+.crossword-backing {
+    display: flex;
+    flex-direction: horizontal;
+    justify-content: center;
+    transform: translate( -8rem, 5rem);
+}
+
+.page-backing {
+    height: 100vh;
+    background-color: azure;
+}
+
+.puzzle-clues {
+    height: 33.75rem;
+    width: 25rem;
+    border: 1px solid black;
+    padding: 5px;
+    overflow-y: auto;
+    background-color: white;
+}
+
+.clues-header {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    margin-bottom: 1rem;
+}
+
+.clue {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: .2rem;
+}
+
+.clue-number {
+    font-weight: 1000;
+}
+
+.clue-text {
+    margin-left: 1rem;
+}
+
