@@ -74,19 +74,70 @@ export default function Puzzle () {
     }
 
     //Click event function
-    const handleClick = (coords, dynamicOrientation) => {
+    const handleClick = (coords, dynamicOrientation, target) => {
+
+        const prevClue = document.querySelector('.clue-clicked');
+        if (prevClue) prevClue.classList.remove('clue-clicked');
+
+        let num;
+        if (!target.id) target = target.parentElement;
         
-        const selected = document.querySelector('.selected');
-        if (selected)
-            selected.classList.remove('selected');
+        if (target.children) {
+            for (const child of target.children) {
+                if (child.tagName === "SPAN") {
+                    num = child.textContent;
+                    break;
+                }
+            }
+        }
 
         //change the orientation if we've click a square twice
         if (currentSquare[0] === coords[0] && currentSquare[1] === coords[1]) {
-            setOrientation(!dynamicOrientation);
-            dynamicOrientation = !dynamicOrientation;
+                setOrientation(!dynamicOrientation);
+                dynamicOrientation = !dynamicOrientation;
         }
+
+        //remove selected square
+        const selected = document.querySelector('.selected');
+        if (selected) selected.classList.remove('selected');
+
+        let string;
+        dynamicOrientation ?
+        string = '-across' :
+        string = '-down';
         
+        let correctClue;
+        if (num) correctClue = document.getElementById(num + string);
+        
+        if (!num || !correctClue) {
+            let nextCoords = coords;
+            //console.log(coords)
+            if (dynamicOrientation) {
+                while (!correctClue) {
+                    nextCoords = [nextCoords[0], nextCoords[1] - 1]
+                    console.log(nextCoords)
+                    const testSpace = document.querySelector(`[data-coords="${nextCoords}"]`);
+                    if (testSpace.id !== 0) {
+                        correctClue = document.getElementById(testSpace.id + string);
+                    }
+                }
+            } else {
+                while (!correctClue) {
+                    nextCoords = [nextCoords[0] - 1, nextCoords[1]]
+                    const testSpace = document.querySelector(`[data-coords="${nextCoords}"]`);
+                    if (testSpace.id !== 0) {
+                        correctClue = document.getElementById(testSpace.id + string);
+                    }
+                }
+            }
+        } 
+            
+        correctClue.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        correctClue.classList.add('clue-clicked');
+         
+        //remove existing and add new highlighting
         updateHighlighting(dynamicOrientation, coords);
+        
     }
 
     //holds key for rendering the board layout
@@ -105,8 +156,8 @@ export default function Puzzle () {
                         key={[x,y]}
                         className="puzzle-square" 
                         data-coords={[x,y]} 
-                        id= {'s-' + char}
-                        onClick={() => handleClick([x,y], orientation)}
+                        id= {char}
+                        onClick={(event) => handleClick([x,y], orientation, event.target)}
                         >
                         </div>;
             default:
@@ -114,8 +165,8 @@ export default function Puzzle () {
                         key={[x,y]}
                         className="puzzle-square" 
                         data-coords={[x,y]} 
-                        id= {'s-' + char}
-                        onClick={() => handleClick([x,y], orientation)}
+                        id= {char}
+                        onClick={(event) => handleClick([x,y], orientation, event.target)}
                         >
                             <span className="square-number">{char}</span>
                         </div>;
@@ -152,7 +203,7 @@ export default function Puzzle () {
                     space.childNodes[1] ?
                     space.removeChild(space.childNodes[1]) :
                     space.removeChild(space.childNodes[0]);
-                } else if (previousSpace) {
+                } else if (previousSpace && previousSpace.id !== 'black-square') {
                     space.classList.remove('selected');
                     setCurrentSquare(previousSpaceCoords);
                     previousSpace.classList.add('selected')
@@ -254,13 +305,15 @@ export default function Puzzle () {
         }
     }
 
-    const goToClue = (number, orientation) => {
-        const correctSquare = document.getElementById('s-' + number);
-        const correctSquareCoords = correctSquare.dataset.coords;
+    const goToClue = (number, across) => {
+        const correctSquareCoords = document.getElementById(number).dataset.coords;
         const indexOfComma = correctSquareCoords.indexOf(',');
         const parsedCoords = [parseInt(correctSquareCoords.substring(0,indexOfComma),10), parseInt(correctSquareCoords.substring(indexOfComma + 1, correctSquareCoords.length, 10))];
 
-        updateHighlighting(orientation, parsedCoords);
+        const selectedSquare = document.querySelector('.selected');
+        if (selectedSquare) selectedSquare.classList.remove('selected');
+
+        updateHighlighting(across, parsedCoords);
     }
 
     useEffect(() => {
@@ -276,8 +329,16 @@ export default function Puzzle () {
                         <div 
                         className='clue' 
                         key={acrossIndex}
-                        onClick={()=> {
-                            goToClue(clue.number);
+                        id={clue.number + '-across'}
+                        onClick={(e)=> {
+                            const clicked = document.querySelector('.clue-clicked');
+                            if (clicked) clicked.classList.remove('clue-clicked');
+
+                            e.target.classList.contains('clue') ?
+                            e.target.classList.add('clue-clicked') :
+                            e.target.parentElement.classList.add('clue-clicked');
+
+                            goToClue(clue.number, true);
                         }}
                         >
                             <div className='clue-number'>{clue.number}</div>
@@ -289,8 +350,16 @@ export default function Puzzle () {
                         <div 
                         className='clue' 
                         key={downIndex}
-                        onClick={()=> {
-                            goToClue(clue.number);
+                        id={clue.number + '-down'}
+                        onClick={(e)=> {
+                            const clicked = document.querySelector('.clue-clicked');
+                            if (clicked) clicked.classList.remove('clue-clicked');
+
+                            e.target.classList.contains('clue') ?
+                            e.target.classList.add('clue-clicked') :
+                            e.target.parentElement.classList.add('clue-clicked');
+                            
+                            goToClue(clue.number, false);
                         }}
                         >
                             <div className='clue-number'>{clue.number}</div>

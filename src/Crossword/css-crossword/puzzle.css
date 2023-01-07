@@ -77,6 +77,15 @@
     display: flex;
     flex-direction: row;
     margin-bottom: .2rem;
+    cursor: pointer;
+}
+
+.clue:hover {
+    background-color: aliceblue;
+}
+
+.clue:hover.clue-clicked {
+    background-color: rgb(187, 218, 244);
 }
 
 .clue-number {
@@ -86,5 +95,9 @@
 
 .clue-text {
     margin-left: 1rem;
+}
+
+.clue-clicked {
+    background-color: rgb(187, 218, 244);
 }
 
