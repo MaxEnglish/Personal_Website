@@ -1,5 +1,4 @@
 import React,{useEffect, useState} from 'react';
-import { ArrowDownCircle } from 'react-bootstrap-icons';
 import '../css-crossword/puzzle.css';
 import {puzzleLoad, clues} from '../js/crossword.js';
 
@@ -73,23 +72,18 @@ export default function Puzzle () {
         }
     }
 
-    //Click event function
+    //Board click event function
     const handleClick = (coords, dynamicOrientation, target) => {
 
+        //remove the clue selection
         const prevClue = document.querySelector('.clue-clicked');
         if (prevClue) prevClue.classList.remove('clue-clicked');
 
+        //getting the clue number
         let num;
         if (!target.id) target = target.parentElement;
-        
-        if (target.children) {
-            for (const child of target.children) {
-                if (child.tagName === "SPAN") {
-                    num = child.textContent;
-                    break;
-                }
-            }
-        }
+        const spans = target.getElementsByTagName('SPAN');
+        if (spans) num = spans[0].textContent;
 
         //change the orientation if we've click a square twice
         if (currentSquare[0] === coords[0] && currentSquare[1] === coords[1]) {
@@ -101,21 +95,22 @@ export default function Puzzle () {
         const selected = document.querySelector('.selected');
         if (selected) selected.classList.remove('selected');
 
+        //correct label for clue getting
         let string;
         dynamicOrientation ?
         string = '-across' :
         string = '-down';
         
+        //finding the correct clue if we clicked on a numbered square directly
         let correctClue;
         if (num) correctClue = document.getElementById(num + string);
         
+        //finding the correct clue if we didn't click on a numbered square directly
         if (!num || !correctClue) {
             let nextCoords = coords;
-            //console.log(coords)
             if (dynamicOrientation) {
                 while (!correctClue) {
                     nextCoords = [nextCoords[0], nextCoords[1] - 1]
-                    console.log(nextCoords)
                     const testSpace = document.querySelector(`[data-coords="${nextCoords}"]`);
                     if (testSpace.id !== 0) {
                         correctClue = document.getElementById(testSpace.id + string);
@@ -131,7 +126,8 @@ export default function Puzzle () {
                 }
             }
         } 
-            
+        
+        //selecting and scrolling into view the correct clue
         correctClue.scrollIntoView({ behavior: 'smooth', block: 'center' });
         correctClue.classList.add('clue-clicked');
          
@@ -176,22 +172,26 @@ export default function Puzzle () {
     //trigger on keypress
     const onKeyDown = (e) => {
         e.preventDefault();
-        const key = e.key;
+        
+        //current space DOM element
         const space = document.querySelector(`[data-coords="${currentSquare}"]`);
 
-        let nextSpaceCoords;
-        orientation ?
-        nextSpaceCoords = [currentSquare[0], currentSquare[1] + 1] :
-        nextSpaceCoords = [currentSquare[0] + 1, currentSquare[1]];
-        
-        const selectedSquare = document.querySelector('.selected');
-        const nextSpace = document.querySelector(`[data-coords="${nextSpaceCoords}"]`);
+        if (space) {
+            const key = e.key;
 
-        if ((selectedSquare && key !== "Backspace" && nextSpace && nextSpace.id !== "black-square" && key.match(letters)) || key === "Tab")
-            selectedSquare.classList.remove('selected');
+            let nextSpaceCoords;
+            orientation ?
+            nextSpaceCoords = [currentSquare[0], currentSquare[1] + 1] :
+            nextSpaceCoords = [currentSquare[0] + 1, currentSquare[1]];
+            
+            const selectedSquare = document.querySelector('.selected');
+            const nextSpace = document.querySelector(`[data-coords="${nextSpaceCoords}"]`);
 
-        if (key === "Backspace") {
-            if (space) {
+            //conditionals for removing the selected square
+            if ((selectedSquare && key !== "Backspace" && nextSpace && nextSpace.id !== "black-square" && key.match(letters)) || key === "Tab")
+                selectedSquare.classList.remove('selected');
+
+            if (key === "Backspace") {
                 let previousSpaceCoords;
                 orientation ?
                 previousSpaceCoords = [currentSquare[0], currentSquare[1] - 1] :
@@ -200,19 +200,20 @@ export default function Puzzle () {
                 const previousSpace = document.querySelector(`[data-coords="${previousSpaceCoords}"]`);
 
                 if (space.childNodes[1] || (space.childNodes[0] && space.childNodes[0].tagName !== 'SPAN')) {
+                    //handle removing character
                     space.childNodes[1] ?
                     space.removeChild(space.childNodes[1]) :
                     space.removeChild(space.childNodes[0]);
                 } else if (previousSpace && previousSpace.id !== 'black-square') {
+                    //handle moving back a space
                     space.classList.remove('selected');
                     setCurrentSquare(previousSpaceCoords);
                     previousSpace.classList.add('selected')
                     document.removeEventListener('keydown', onKeyDown);
                 }
-            }
-        } else if (key === "Tab") {
-            //find the next number
-            if (space) {
+            } else if (key === "Tab") {
+                document.querySelector('.clue-clicked').classList.remove('clue-clicked');
+                //find the next number
                 let done = false;
 
                 if (orientation) {
@@ -238,7 +239,10 @@ export default function Puzzle () {
                         } else {
                             if (!nextBoxBehind || nextBoxBehind.id === 'black-square') {
                                 //correct spot
-                                updateHighlighting(orientation, next)
+                                const correctClue =  document.getElementById(nextBox.childNodes[0].innerText + '-across');
+                                correctClue.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                correctClue.classList.add('clue-clicked');
+                                updateHighlighting(orientation, next);
                                 done = true;
                             } else {
                                 next = [next[0], next[1] + 1];
@@ -270,6 +274,9 @@ export default function Puzzle () {
                             if (!nextBoxAbove || nextBoxAbove.id === 'black-square') {
                                 //correct spot
                                 done = true;
+                                const correctClue =  document.getElementById(nextBox.children[0].innerText + '-down')
+                                correctClue.scrollIntoView({ behavior: 'smooth', block: 'center'});
+                                correctClue.classList.add('clue-clicked');
                                 updateHighlighting(orientation, next)
                             } else {
                                 next = [next[0], next[1] + 1];
@@ -278,18 +285,14 @@ export default function Puzzle () {
                         }
                     }
                 }
-            }
-        } else if (key.match(letters)) {
-            if (space) {
+            } else if (key.match(letters)) {
                 //handle replacing current letter if space already contains one
-
-                    if (space.childNodes[0] && space.childNodes[0].tagName !== 'SPAN') {
-                        space.removeChild(space.childNodes[0])
-                    } else if (space.childNodes[1]) {
-                        space.removeChild(space.childNodes[1])
-                    }
+                if (space.childNodes[0] && space.childNodes[0].tagName !== 'SPAN') {
+                    space.removeChild(space.childNodes[0])
+                } else if (space.childNodes[1]) {
+                    space.removeChild(space.childNodes[1])
+                }
                 
-
                 //create a new element for the letter typed
                 const textContainer = document.createElement('p');
                 textContainer.appendChild(document.createTextNode(key.toUpperCase()))
@@ -345,6 +348,7 @@ export default function Puzzle () {
                             <div className='clue-text'>{clue.clue}</div>
                         </div>
                     ))}
+                    <hr className='separator'/>
                     <header className='clues-header'>Down</header>
                     {clues[1].map((clue, downIndex) => (
                         <div 
