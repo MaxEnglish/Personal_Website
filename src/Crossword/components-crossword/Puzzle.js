@@ -83,7 +83,9 @@ export default function Puzzle () {
         let num;
         if (!target.id) target = target.parentElement;
         const spans = target.getElementsByTagName('SPAN');
-        if (spans) num = spans[0].textContent;
+        if (spans.length > 0) {
+            num = spans[0].textContent;
+        }
 
         //change the orientation if we've click a square twice
         if (currentSquare[0] === coords[0] && currentSquare[1] === coords[1]) {
