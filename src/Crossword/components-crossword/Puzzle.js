@@ -10,6 +10,10 @@ export default function Puzzle () {
 
     const [currentSquare, setCurrentSquare] = useState([null, null]);
 
+    const [tilesPlayed, setTilesPlayed] = useState(0);
+    //loop thru coords and check each to make sure they contain correct letter
+    //trigger only when tilesPlayes reaches a certain amount
+
     ///// Auxilliary Functions /////
 
     const updateHighlighting = (dynamicOrientation, coords) => {
@@ -74,6 +78,8 @@ export default function Puzzle () {
 
     //Board click event function
     const handleClick = (coords, dynamicOrientation, target) => {
+
+        document.removeEventListener('keydown', onKeyDown);
 
         //remove the clue selection
         const prevClue = document.querySelector('.clue-clicked');
@@ -206,6 +212,7 @@ export default function Puzzle () {
                     space.childNodes[1] ?
                     space.removeChild(space.childNodes[1]) :
                     space.removeChild(space.childNodes[0]);
+                    setTilesPlayed(tilesPlayed - 1);
                 } else if (previousSpace && previousSpace.id !== 'black-square') {
                     //handle moving back a space
                     space.classList.remove('selected');
@@ -293,6 +300,11 @@ export default function Puzzle () {
                     space.removeChild(space.childNodes[0])
                 } else if (space.childNodes[1]) {
                     space.removeChild(space.childNodes[1])
+                } else {
+                    setTilesPlayed(tilesPlayed + 1);
+                    if (tilesPlayed + 1 === 187) {
+                        console.log("hey jude")
+                    }
                 }
                 
                 //create a new element for the letter typed
@@ -304,8 +316,11 @@ export default function Puzzle () {
                 if (nextSpace && nextSpace.id !== "black-square") {
                     nextSpace.classList.add('selected');
                     setCurrentSquare(nextSpaceCoords);
-                    document.removeEventListener('keydown', onKeyDown);
+                } else {
+                    //forces the state to rerender which triggers the useEffect
+                    setCurrentSquare([nextSpaceCoords[0], nextSpaceCoords[1] - 1]);
                 }
+                document.removeEventListener('keydown', onKeyDown);
             }
         }
     }
