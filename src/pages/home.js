@@ -39,42 +39,41 @@ export default function Home() {
     </section>
 
     <section id='portfolio' className='mt-10 section-break'>
-      <h1 className='text-xl font-medium'>Portfolio</h1>
-      <p className='mt-1 text-md mb-10'>Here are some personal projects I developed for this website</p>
+      <h1 className='text-3xl font-semibold'>Personal Projects</h1>
+      <p className='mb-10 mt-1 text-lg'>Word games I developed for this website using React and vanilla Javascript embedded into this application</p>
 
-      <div className='columns-3 gap-4 flex justify-center'>
-        <Link to="/scrabble">
-          <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48'>
-            <img src='SCRABBLE.PNG' className='container mx-auto w-48'/>
-            <p className='font-semibold'>Singleplayer Scrabble</p>
-          </div>
-        </Link>
-        <Link to="/wordle">
-        <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48'>
+      <div className='columns-3 col-gap flex'>
+      <Link to="/wordle">
+        <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48 game-effect'>
             <img src='WORDLE.webp' className='container mx-auto w-32'/>
             <p className='font-semibold'>Wordle</p>
         </div>
         </Link>
         <Link to='/crossword'>
-        <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48'>
+        <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48 game-effect'>
             <img src='CROSSWORD.png' className='container mx-auto w-32'/>
             <p className='font-semibold'>Crossword Puzzle</p>
         </div>
+        </Link>
+        <Link to="/scrabble">
+          <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48 game-effect'>
+            <img src='SCRABBLE.PNG' className='container mx-auto w-48'/>
+            <p className='font-semibold'>Singleplayer Scrabble</p>
+          </div>
         </Link>
       </div>
     </section>
 
 
-    <section id='experience' className='section-break'>
-      <h1 className='text-xl font-medium'>Experience </h1>
-      <p className='mt-1 text-md'> My practical experience pertaining to web development </p>
+    <section id='experience' className='section-break mt-20'>
+      <h1 className='text-3xl font-semibold'>Experience </h1>
+      <p className='mt-1 mb-10 text-lg'> My past jobs pertaining to web development </p>
 
       <div className='mt-4 flex md:flex-row gap-8'>
         <div className='w-full shadow-lg rounded-md px-4 py-5 flex flex-col items-center text-center gap-1'>
-          <img src='/NLX.PNG' className='w-48' alt='Plugin-Example' />
-          <h2 className='text-xl'>NLX SWE Internship, Summer 2022</h2>
-          <p className='text-gray-500'>Built a Figma Plugin to import data from Figma to NLX's website</p>
-          <p className='text-xl underline decoration-gray-400'>Tools I Used</p>
+          <img src='/NLXLOGO.PNG' className='nlx-logo' alt='Plugin-Example' />
+          <h2 className='text-2xl'>NLX SWE Internship, Summer 2022</h2>
+          <p className='text-gray-500'>Built a Figma Plugin to import data from Figma to NLX's website using:</p>
           <ul>
             <li>React</li>
             <li>Typescript</li>
@@ -84,14 +83,14 @@ export default function Home() {
         </div>
 
         <div className='w-full shadow-lg rounded-md px-4 py-5 flex flex-col items-center text-center gap-1'>
-          <img className='w-48 agora-logo' src='/AGORA.PNG' alt='gambar' />
-          <h2 className='text-xl'>Marist Capstone Project, Fall 2022</h2>
-          <p className='text-gray-500'>Developed the frontend for a knowledge management platform</p>
-          <p className='text-xl underline decoration-gray-400'>Tools I Used</p>
+          <img className='agora-logo' src='/AGORA.PNG' alt='There was an image here... hmmm' />
+          <h2 className='text-2xl mt-4'>Marist Capstone Project, Fall 2022</h2>
+          <p className='text-gray-500'>Developed the frontend for a knowledge management platform using: </p>
           <ul>
             <li>Javascript</li>
             <li>EJS</li>
             <li>Bootstrap</li>
+            <li>Express</li>
           </ul>
         </div>
 
@@ -99,30 +98,80 @@ export default function Home() {
 
     </section>
 
-    <section id='expertise'>
-      <h1 className='text-xl font-medium'>Expertise </h1>
-      <p className='mt-1 text-md'> What do I know? Hmmm.... well let's see </p>
-
-      
+    <section id='expertise' className='mt-20'>
+      <h1 className='text-3xl font-semibold'>Expertise </h1>
+      <p className='mt-1 text-md'> Hover over category to view </p>
+      <ul>
+        <li className='accordian'>
+          Frontend
+          <i class="down-arrow"></i>
+        </li>
+        <div className='subtext'>
+          <ul>
+            <li>React</li>
+            <li>Bootstrap</li>
+            <li>Tailwind</li>
+            <li>Typescript</li>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>Figma</li>
+          </ul>
+        </div>
+        <li className='accordian'>
+          Backend
+          <i class="down-arrow"></i>
+        </li>
+        <div className='subtext'>
+        <ul>
+            <li>Express.js</li>
+            <li>REST APIs</li>
+            <li>SQL</li>
+            <li>AWS</li>
+          </ul>
+        </div>
+        <li className='accordian'>
+          Programming Languages
+          <i class="down-arrow"></i>
+        </li>
+        <div className='subtext'>
+        <ul>
+            <li>Javascript (Primary Language) </li>
+            <li>Java</li>
+            <li>C++</li>
+            <li>Python</li>
+          </ul>
+        </div>
+        <li className='accordian'>
+          Other
+          <i class="down-arrow"></i>
+        </li>
+        <div className='subtext'>
+        <ul>
+            <li>Microsoft Office</li>
+            <li>Photoshop & Illustrator</li>
+            <li>Product Design</li>
+            <li>Working with teams & good communication</li>
+          </ul>
+        </div>
+      </ul>
     </section>
 
     <section id="footer" className='mt-5 rounded bg-black py-8 px-8'>
       <div className='text-white md:text-center'>
         <h1 className='font-medium text-lg'>Contact Me</h1>
-        <p>Wanna talk anything?</p>
 
         <ul className='md:flex justify-center gap-4'>
           <li className='flex items-center gap-2'>
             <AiFillMail />
-            <p>damasukmath@gmail.com</p>
+            <p>maxjenglish@gmail.com</p>
           </li>
           <li className='flex items-center gap-2'>
             <AiFillEnvironment />
-            <p>Kab. Tegal</p>
+            <p>Poughkeepsie, NY</p>
           </li>
           <li className='flex items-center gap-2'>
             <AiFillPhone/>
-            <p>0858-0058-9558</p>
+            <p>475-277-9094</p>
           </li>
         </ul>
 
@@ -135,7 +184,7 @@ export default function Home() {
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"/>
 
         <p className="text-center text-sm text-gray-300 sm:text-center">
-          © 2022
+          © 2023
         </p>
 
       </div>
