@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import '../css-crossword/puzzle.css';
-import {puzzleLoad, clues} from '../js/crossword.js';
+import {puzzleLoad, clues, answers} from '../js/crossword.js';
 
 export default function Puzzle () {
 
@@ -212,14 +212,15 @@ export default function Puzzle () {
                     space.childNodes[1] ?
                     space.removeChild(space.childNodes[1]) :
                     space.removeChild(space.childNodes[0]);
+                    setCurrentSquare([currentSquare[0], currentSquare[1]]);
                     setTilesPlayed(tilesPlayed - 1);
                 } else if (previousSpace && previousSpace.id !== 'black-square') {
                     //handle moving back a space
                     space.classList.remove('selected');
                     setCurrentSquare(previousSpaceCoords);
                     previousSpace.classList.add('selected')
-                    document.removeEventListener('keydown', onKeyDown);
                 }
+                document.removeEventListener('keydown', onKeyDown);
             } else if (key === "Tab") {
                 document.querySelector('.clue-clicked').classList.remove('clue-clicked');
                 //find the next number
@@ -296,15 +297,15 @@ export default function Puzzle () {
                 }
             } else if (key.match(letters)) {
                 //handle replacing current letter if space already contains one
-                if (space.childNodes[0] && space.childNodes[0].tagName !== 'SPAN') {
-                    space.removeChild(space.childNodes[0])
-                } else if (space.childNodes[1]) {
+                const hasLetter = space.childNodes[0] && space.childNodes[0].tagName !== 'SPAN';
+                const hasLetterAndNumber = space.childNodes[1];
+
+                if (hasLetter) {
+                    space.removeChild(space.childNodes[0]);
+                } else if (hasLetterAndNumber) {
                     space.removeChild(space.childNodes[1])
                 } else {
                     setTilesPlayed(tilesPlayed + 1);
-                    if (tilesPlayed + 1 === 187) {
-                        console.log("hey jude")
-                    }
                 }
                 
                 //create a new element for the letter typed
@@ -312,13 +313,16 @@ export default function Puzzle () {
                 textContainer.appendChild(document.createTextNode(key.toUpperCase()))
                 space.appendChild(textContainer);
 
+                if ((hasLetter || hasLetterAndNumber) && tilesPlayed === 187) {
+                    checkPuzzle();
+                }
                 //handle setting the next square
                 if (nextSpace && nextSpace.id !== "black-square") {
                     nextSpace.classList.add('selected');
                     setCurrentSquare(nextSpaceCoords);
                 } else {
                     //forces the state to rerender which triggers the useEffect
-                    setCurrentSquare([nextSpaceCoords[0], nextSpaceCoords[1] - 1]);
+                    setCurrentSquare([currentSquare[0], currentSquare[1]]);
                 }
                 document.removeEventListener('keydown', onKeyDown);
             }
@@ -336,9 +340,28 @@ export default function Puzzle () {
         updateHighlighting(across, parsedCoords);
     }
 
+    const checkPuzzle = () => {
+        let currentCheck, i, j;
+        for (i = 0; i < 15; ++i) {
+            for (j = 0; j < 15; ++j) {
+                currentCheck = answers[i][j];
+                if (currentCheck) {
+                    if (document.querySelector(`[data-coords="${[i,j]}"]`).getElementsByTagName('P')[0].textContent !== currentCheck) {
+                        return;
+                    }
+                }
+            }
+        }
+        window.alert('Congrats! You have successfully solved the puzzle!');
+    }
+
     useEffect(() => {
         document.addEventListener('keydown', onKeyDown);
     }, [currentSquare]);
+
+    useEffect(()=> {
+        if (tilesPlayed === 187) checkPuzzle();
+    },[tilesPlayed])
 
     return (
         <div className='page-backing'>
