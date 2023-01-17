@@ -131,3 +131,16 @@
   left: 85vw;
   margin-top: 2.5vh;
 }
+
+.headshot {
+  width: 40%;
+}
+
+.about-me-gap {
+  margin-right: calc(5vw - 20px);
+}
+
+.about-me-blurb {
+  font-size: larger;
+  text-align: center;
+}

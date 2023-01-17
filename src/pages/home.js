@@ -43,19 +43,19 @@ export default function Home() {
       <p className='mb-10 mt-1 text-lg'>Word games I developed for this website using React and vanilla Javascript embedded into this application</p>
 
       <div className='columns-3 col-gap flex'>
-      <Link to="/wordle">
+      <Link to="/wordle" target="_blank">
         <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48 game-effect'>
             <img src='WORDLE.webp' className='container mx-auto w-32'/>
             <p className='font-semibold'>Wordle</p>
         </div>
         </Link>
-        <Link to='/crossword'>
+        <Link to='/crossword' target="_blank">
         <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48 game-effect'>
             <img src='CROSSWORD.png' className='container mx-auto w-32'/>
             <p className='font-semibold'>Crossword Puzzle</p>
         </div>
         </Link>
-        <Link to="/scrabble">
+        <Link to="/scrabble" target="_blank">
           <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48 game-effect'>
             <img src='SCRABBLE.PNG' className='container mx-auto w-48'/>
             <p className='font-semibold'>Singleplayer Scrabble</p>
@@ -104,7 +104,7 @@ export default function Home() {
       <ul>
         <li className='accordian'>
           Frontend
-          <i class="down-arrow"></i>
+          <i className="down-arrow"></i>
         </li>
         <div className='subtext'>
           <ul>
@@ -119,7 +119,7 @@ export default function Home() {
         </div>
         <li className='accordian'>
           Backend
-          <i class="down-arrow"></i>
+          <i className="down-arrow"></i>
         </li>
         <div className='subtext'>
         <ul>
@@ -131,7 +131,7 @@ export default function Home() {
         </div>
         <li className='accordian'>
           Programming Languages
-          <i class="down-arrow"></i>
+          <i className="down-arrow"></i>
         </li>
         <div className='subtext'>
         <ul>
@@ -143,7 +143,7 @@ export default function Home() {
         </div>
         <li className='accordian'>
           Other
-          <i class="down-arrow"></i>
+          <i className="down-arrow"></i>
         </li>
         <div className='subtext'>
         <ul>
@@ -154,6 +154,22 @@ export default function Home() {
           </ul>
         </div>
       </ul>
+    </section>
+
+    <section id="about-me" className='mt-20'>
+      <h1 className='text-3xl font-semibold mb-4'>About Me </h1>
+      <div className='flex flex-row'>
+        <img src='/headshot.jpg' className='headshot about-me-gap'/>
+        <p className='about-me-blurb'>Hi! My name is Max and I'm currently a senior at Marist College studying computer science. In 2022, I discovered a real passion 
+          for designing websites, and ever since, have been trying to strengthen my skillset so I am marketable in the industry. Growing up,
+          I loved playing sandbox games where I could combine building blocks to create something new and exciting. I believe that this same
+          passion has translated over to Web Dev and it is what motivates me to continue learning and practicing. My short term goal is to 
+          apply for Frontend developer jobs and continue to practice my CSS and Javascript in order to better myself. Long term, I would like to
+          either join or found a company whose mission aligns with my own values. For example, I am deeply ardent towards protecting the 
+          environment and would like to invest my time into sustainable farming and/or measures against climate change. Outside of school and work,
+          I enjoy hiking in the mountains alongside my campus and trying new restaurants. At heart, however, I am a big nerd, and enjoy 
+          watching anime and playing Magic, the Gathering with friends. </p>
+      </div>
     </section>
 
     <section id="footer" className='mt-5 rounded bg-black py-8 px-8'>

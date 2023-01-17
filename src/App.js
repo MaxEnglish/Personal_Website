@@ -4,6 +4,7 @@ import Home from "./pages/home";
 import ScrabbleGame from "./pages/ScrabbleGame";
 import WordleGame from "./pages/WordleGame";
 import CrosswordGame from "./pages/CrosswordGame";
+import Resume from "./pages/Resume";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/scrabble" element={<ScrabbleGame />} />
           <Route path="/wordle" element={<WordleGame />} />
           <Route path="/crossword" element={<CrosswordGame />}/>
+          <Route path="/resume" element={<Resume />}/>
         </Routes>
       </div>
     </Router>
