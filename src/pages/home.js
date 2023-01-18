@@ -21,7 +21,7 @@ export default function Home() {
         </div>
         <h1 className='text-3xl md:text-5xl font-medium text-teal-500'>MAX ENGLISH</h1>
         <h3 className='text-xl md:text-2xl'>Web Developer and Software Engineer</h3>
-        <p className='text-md py-1 text-gray-800 md:text-xl'> Enthusiastic and motivated to improve the user experience by creating responsive, multi-browser web applications utilizing modern frontend frameworks! Eager to learn more and gain valuable experience in my field! </p>
+        <p className='text-md py-1 text-gray-800 md:text-xl'> Enthusiastic and motivated to improve the user experience by creating responsive, multi-browser web applications utilizing modern frontend frameworks. Eager to learn more and gain valuable experience in my field! </p>
         <div className='text-5xl py-4 flex justify-center gap-16 text-gray-600'>
           <AiFillLinkedin 
           className='cursor-pointer'
@@ -102,11 +102,20 @@ export default function Home() {
       <h1 className='text-3xl font-semibold'>Expertise </h1>
       <p className='mt-1 text-md'> Hover over category to view </p>
       <ul>
-        <li className='accordian lessen-font'>
+        <li className='accordian lessen-font' onClick={(e) => {
+          const target = e.target;
+          if (target.classList.contains('accordian-effect')) {
+            target.classList.remove('accordian-effect');
+            document.getElementById('frontend-list').classList.remove('subtext-effect');
+          } else {
+            target.classList.add('accordian-effect');
+            document.getElementById('frontend-list').classList.add('subtext-effect');
+          }
+        }}>
           Frontend
           <i className="down-arrow"></i>
         </li>
-        <div className='subtext'>
+        <div className='subtext' id="frontend-list">
           <ul>
             <li>React</li>
             <li>Bootstrap</li>
@@ -117,11 +126,21 @@ export default function Home() {
             <li>Figma</li>
           </ul>
         </div>
-        <li className='accordian lessen-font'>
+        <li className='accordian lessen-font' onClick={(e) => {
+          const target = e.target;
+          if (target.classList.contains('accordian-effect')) {
+            target.classList.remove('accordian-effect');
+            document.getElementById('backend-list').classList.remove('subtext-effect');
+          } else {
+            target.classList.add('accordian-effect');
+            document.getElementById('backend-list').classList.add('subtext-effect');
+          }
+          
+        }}>
           Backend
           <i className="down-arrow"></i>
         </li>
-        <div className='subtext'>
+        <div className='subtext' id="backend-list">
         <ul>
             <li>Express.js</li>
             <li>REST APIs</li>
@@ -129,11 +148,21 @@ export default function Home() {
             <li>AWS</li>
           </ul>
         </div>
-        <li className='accordian lessen-font'>
+        <li className='accordian lessen-font' onClick={(e) => {
+          const target = e.target;
+          if (target.classList.contains('accordian-effect')) {
+            target.classList.remove('accordian-effect');
+            document.getElementById('languages-list').classList.remove('subtext-effect');
+          } else {
+            target.classList.add('accordian-effect');
+            document.getElementById('languages-list').classList.add('subtext-effect');
+          }
+          
+        }}>
           Programming Languages
           <i className="down-arrow"></i>
         </li>
-        <div className='subtext'>
+        <div className='subtext' id="languages-list">
         <ul>
             <li>Javascript (Primary Language) </li>
             <li>Java</li>
@@ -141,11 +170,21 @@ export default function Home() {
             <li>Python</li>
           </ul>
         </div>
-        <li className='accordian lessen-font'>
+        <li className='accordian lessen-font' onClick={(e) => {
+          const target = e.target;
+          if (target.classList.contains('accordian-effect')) {
+            target.classList.remove('accordian-effect');
+            document.getElementById('other-list').classList.remove('subtext-effect');
+          } else {
+            target.classList.add('accordian-effect');
+            document.getElementById('other-list').classList.add('subtext-effect');
+          }
+          
+        }}>
           Other
           <i className="down-arrow"></i>
         </li>
-        <div className='subtext'>
+        <div className='subtext' id='other-list'>
         <ul>
             <li>Microsoft Office</li>
             <li>Photoshop & Illustrator</li>
@@ -158,7 +197,7 @@ export default function Home() {
 
     <section id="about-me" className='mt-20'>
       <h1 className='text-3xl font-semibold mb-4'>About Me </h1>
-      <div className='flex flex-row'>
+      <div className='adjust-orientation'>
         <img src='/headshot.jpg' className='headshot about-me-gap'/>
         <p className='about-me-blurb'>Hi! My name is Max and I'm currently a senior at Marist College studying computer science. In 2022, I discovered a real passion 
           for designing websites, and ever since, have been trying to strengthen my skillset so I am marketable in the industry. Growing up,
@@ -192,9 +231,18 @@ export default function Home() {
         </ul>
 
         <div className='flex text-xl text-white gap-4 mt-2 md:justify-center'>
-          <AiFillLinkedin /> 
-          <AiFillGithub />
-          <AiFillInstagram />
+          <AiFillLinkedin
+          className='cursor-pointer'
+          onClick={()=>linkTo("https://www.linkedin.com/in/max-english-774261180/")}
+          /> 
+          <AiFillGithub 
+          className='cursor-pointer'
+          onClick={()=>linkTo("https://github.com/MaxEnglish")}
+          />
+          <AiFillInstagram 
+          className='cursor-pointer'
+          onClick={()=>linkTo("https://www.instagram.com/max_inglish_/")}
+          />
         </div>
 
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"/>
