@@ -159,6 +159,10 @@
   flex-direction: row;
 }
 
+.resume-btn:hover{
+  outline: 3px solid lightgray;
+}
+
 @media all and (max-width: 650px) {
   .my-header{
     display: none;

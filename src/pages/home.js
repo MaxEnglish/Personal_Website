@@ -100,7 +100,7 @@ export default function Home() {
 
     <section id='expertise' className='mt-20'>
       <h1 className='text-3xl font-semibold'>Expertise </h1>
-      <p className='mt-1 text-md'> Hover over category to view </p>
+      <p className='mt-1 text-md'> Click category to expand </p>
       <ul>
         <li className='accordian lessen-font' onClick={(e) => {
           const target = e.target;
