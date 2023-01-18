@@ -79,7 +79,7 @@
   border: none;
   box-shadow: inset 0 0 .4rem gray;
   line-height: 3rem;
-  font-size:x-large;  
+  font-size: 2.5vw;  
   font-weight: 500;
   padding-left: 15px;
   letter-spacing: 2px;
@@ -151,4 +151,23 @@
 
 .right-navbar-padding {
   padding-right: 5vw;
+}
+
+@media all and (max-width: 650px) {
+  .my-header{
+    display: none;
+  }
+  .adjust-dimensions {
+    height: auto;
+    width: 28vw;
+  }
+  .headshot {
+    display: none;
+  }
+  .lessen-font {
+    font-size: calc(2.5vw + 10px);
+  }
+  .resume-btn {
+    display: none;
+  }
 }

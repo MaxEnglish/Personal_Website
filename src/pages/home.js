@@ -15,7 +15,7 @@ export default function Home() {
     
     <Navbar />
 
-    <section id='home' className='min-h-screen text-center mt-4 flex flex-col justify-center '>
+    <section id='home' className='min-h-screen text-center mt-4 flex flex-col justify-center'>
         <div className="mx-auto bg-gradient-to-b from-teal-500 rounded-full w-56 h-56 relative overflow-hidden md:h-96 md:w-96 mb-2">
           <img src='/avatar.png' layout="fill"/>
         </div>
@@ -40,23 +40,23 @@ export default function Home() {
 
     <section id='portfolio' className='mt-10 section-break'>
       <h1 className='text-3xl font-semibold'>Personal Projects</h1>
-      <p className='mb-10 mt-1 text-lg'>Word games I developed for this website using React and vanilla Javascript embedded into this application</p>
+      <p className='mb-10 mt-1 text-lg'>Word games I developed for this website using React and vanilla Javascript embedded into this application (No touchscreen support) </p>
 
       <div className='columns-3 col-gap flex'>
       <Link to="/wordle" target="_blank">
-        <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48 game-effect'>
+        <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48 game-effect adjust-dimensions'>
             <img src='WORDLE.webp' className='container mx-auto w-32'/>
             <p className='font-semibold'>Wordle</p>
         </div>
         </Link>
         <Link to='/crossword' target="_blank">
-        <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48 game-effect'>
+        <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48 game-effect adjust-dimensions'>
             <img src='CROSSWORD.png' className='container mx-auto w-32'/>
             <p className='font-semibold'>Crossword Puzzle</p>
         </div>
         </Link>
         <Link to="/scrabble" target="_blank">
-          <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48 game-effect'>
+          <div className='flex flex-col items-center text-center shadow-lg p-2.5 h-48 w-48 game-effect adjust-dimensions'>
             <img src='SCRABBLE.PNG' className='container mx-auto w-48'/>
             <p className='font-semibold'>Singleplayer Scrabble</p>
           </div>
@@ -102,7 +102,7 @@ export default function Home() {
       <h1 className='text-3xl font-semibold'>Expertise </h1>
       <p className='mt-1 text-md'> Hover over category to view </p>
       <ul>
-        <li className='accordian'>
+        <li className='accordian lessen-font'>
           Frontend
           <i className="down-arrow"></i>
         </li>
@@ -117,7 +117,7 @@ export default function Home() {
             <li>Figma</li>
           </ul>
         </div>
-        <li className='accordian'>
+        <li className='accordian lessen-font'>
           Backend
           <i className="down-arrow"></i>
         </li>
@@ -129,7 +129,7 @@ export default function Home() {
             <li>AWS</li>
           </ul>
         </div>
-        <li className='accordian'>
+        <li className='accordian lessen-font'>
           Programming Languages
           <i className="down-arrow"></i>
         </li>
@@ -141,7 +141,7 @@ export default function Home() {
             <li>Python</li>
           </ul>
         </div>
-        <li className='accordian'>
+        <li className='accordian lessen-font'>
           Other
           <i className="down-arrow"></i>
         </li>
