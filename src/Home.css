@@ -144,3 +144,11 @@
   font-size: larger;
   text-align: center;
 }
+
+.navbar-padding {
+  padding: 1.25rem 2.5vw;
+}
+
+.right-navbar-padding {
+  padding-right: 5vw;
+}
