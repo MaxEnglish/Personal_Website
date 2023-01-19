@@ -40,7 +40,7 @@ export default function Home() {
 
     <section id='portfolio' className='mt-10 section-break'>
       <h1 className='text-3xl font-semibold'>Personal Projects</h1>
-      <p className='mb-10 mt-1 text-lg'>Word games I developed for this website using React and vanilla Javascript embedded into this application (No touchscreen support). </p>
+      <p className='mb-10 mt-1 text-lg'>Word games I developed for this website using React and vanilla Javascript embedded into this application (no touchscreen support). </p>
 
       <div className='columns-3 col-gap flex'>
       <Link to="/wordle" target="_blank">
