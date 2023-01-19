@@ -21,7 +21,7 @@ export default function Home() {
         </div>
         <h1 className='text-3xl md:text-5xl font-medium text-teal-500'>MAX ENGLISH</h1>
         <h3 className='text-xl md:text-2xl'>Web Developer and Software Engineer</h3>
-        <p className='text-md py-1 text-gray-800 md:text-xl'> Enthusiastic and motivated to improve the user experience by creating responsive, multi-browser web applications utilizing modern frontend frameworks. Eager to learn more and gain valuable experience in my field! </p>
+        <p className='text-md py-1 text-gray-800 md:text-xl'> Enthusiastic and motivated to improve the user experience by creating responsive, multi-browser web applications utilizing modern front-end frameworks. Eager to learn more and gain valuable experience in my field! </p>
         <div className='text-5xl py-4 flex justify-center gap-16 text-gray-600'>
           <AiFillLinkedin 
           className='cursor-pointer'
@@ -40,7 +40,7 @@ export default function Home() {
 
     <section id='portfolio' className='mt-10 section-break'>
       <h1 className='text-3xl font-semibold'>Personal Projects</h1>
-      <p className='mb-10 mt-1 text-lg'>Word games I developed for this website using React and vanilla Javascript embedded into this application (No touchscreen support) </p>
+      <p className='mb-10 mt-1 text-lg'>Word games I developed for this website using React and vanilla Javascript embedded into this application (No touchscreen support). </p>
 
       <div className='columns-3 col-gap flex'>
       <Link to="/wordle" target="_blank">
@@ -67,7 +67,7 @@ export default function Home() {
 
     <section id='experience' className='section-break mt-20'>
       <h1 className='text-3xl font-semibold'>Experience </h1>
-      <p className='mt-1 mb-10 text-lg'> My past jobs pertaining to web development </p>
+      <p className='mt-1 mb-10 text-lg'>My relevant web development experience</p>
 
       <div className='mt-4 flex md:flex-row gap-8'>
         <div className='w-full shadow-lg rounded-md px-4 py-5 flex flex-col items-center text-center gap-1'>
@@ -85,7 +85,7 @@ export default function Home() {
         <div className='w-full shadow-lg rounded-md px-4 py-5 flex flex-col items-center text-center gap-1'>
           <img className='agora-logo' src='/AGORA.PNG' alt='There was an image here... hmmm' />
           <h2 className='text-2xl mt-4'>Marist Capstone Project, Fall 2022</h2>
-          <p className='text-gray-500'>Developed the frontend for a knowledge management platform using: </p>
+          <p className='text-gray-500'>Developed the front-end for a knowledge management platform using: </p>
           <ul>
             <li>Javascript</li>
             <li>EJS</li>
@@ -112,7 +112,7 @@ export default function Home() {
             document.getElementById('frontend-list').classList.add('subtext-effect');
           }
         }}>
-          Frontend
+          Front-end
           <i className="down-arrow"></i>
         </li>
         <div className='subtext' id="frontend-list">
@@ -137,7 +137,7 @@ export default function Home() {
           }
           
         }}>
-          Backend
+          Back-end
           <i className="down-arrow"></i>
         </li>
         <div className='subtext' id="backend-list">
@@ -199,15 +199,14 @@ export default function Home() {
       <h1 className='text-3xl font-semibold mb-4'>About Me </h1>
       <div className='adjust-orientation'>
         <img src='/headshot.jpg' className='headshot about-me-gap'/>
-        <p className='about-me-blurb'>Hi! My name is Max and I'm currently a senior at Marist College studying computer science. In 2022, I discovered a real passion 
-          for designing websites, and ever since, have been trying to strengthen my skillset so I am marketable in the industry. Growing up,
-          I loved playing sandbox games where I could combine building blocks to create something new and exciting. I believe that this same
-          passion has translated over to Web Dev and it is what motivates me to continue learning and practicing. My short term goal is to 
-          apply for Frontend developer jobs and continue to practice my CSS and Javascript in order to better myself. Long term, I would like to
-          either join or found a company whose mission aligns with my own values. For example, I am deeply ardent towards protecting the 
-          environment and would like to invest my time into sustainable farming and/or measures against climate change. Outside of school and work,
-          I enjoy hiking in the mountains alongside my campus and trying new restaurants. At heart, however, I am a big nerd, and enjoy 
-          watching anime and playing Magic, the Gathering with friends. </p>
+        <p className='about-me-blurb'>Hi! My name is Max and I’m currently a senior at Marist College studying computer science. 
+        I am passionate about designing and programming websites which mingles my creativity and coding skills. I have always been 
+        drawn to games and projects that entail some combination of strategy, problem solving and design. I am anxious to start my tech career, building on the 
+        valuable experience I’ve attained through internships, school projects and independent learning.  My goal is to contribute to 
+        an organization with whom I have shared values and connect to the business's mission. I want to be part of a collaborative team 
+        where I have meaningful work and am constantly learning and growing. In addition to web design and programming, I have a passion 
+        for sustainable farming and fighting climate change. In my free time, I enjoy hiking, tennis, and exploring new restaurants. 
+        At heart, though, I am a nerd and enjoy watching anime and playing Magic, the Gathering with friends. </p>
       </div>
     </section>
 
