@@ -223,10 +223,6 @@ export default function Home() {
             <AiFillEnvironment />
             <p>Poughkeepsie, NY</p>
           </li>
-          <li className='flex items-center gap-2'>
-            <AiFillPhone/>
-            <p>475-277-9094</p>
-          </li>
         </ul>
 
         <div className='flex text-xl text-white gap-4 mt-2 md:justify-center'>
